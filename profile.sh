@@ -46,7 +46,7 @@ for image in $wget_sysdockerimagelist; do
 done
 
 # --- Leave a trace
-run "SVEN - leave a trace" "docker exec -i system-docker docker network create sven_net" "$TMP/provisioning.log"
+run "SVEN - leave a trace" "docker exec -i system-docker docker network create sven_net2" "$TMP/provisioning.log"
 
 
 # --- Start the Portainer edge agent
@@ -58,8 +58,8 @@ docker run -d \
     -v portainer_agent_data:/data \
     --restart always \
     -e EDGE=1 \
-    -e EDGE_ID=d4cf308d-801b-4ae2-8ea1-3214166ea5ce \
-    -e EDGE_KEY=aHR0cHM6Ly9wMTo5NDQzfHAxOjgwMDB8NDM6YjU6YmU6YTQ6N2I6NzI6NGQ6NWE6OTg6MDc6ZDc6ZTM6ODA6ZWI6YmQ6ODJ8OQ \
+    -e EDGE_ID=2e203fb4-ade1-4ed8-93cb-a177e51cf4b8 \
+    -e EDGE_KEY=aHR0cHM6Ly9wb3J0YWluZXIucDEuYWxoby5zdHxwb3J0YWluZXIucDEuYWxoby5zdDo4MDAwfDQzOmI1OmJlOmE0OjdiOjcyOjRkOjVhOjk4OjA3OmQ3OmUzOjgwOmViOmJkOjgyfDIx \
     -e CAP_HOST_MANAGEMENT=1 \
     -e EDGE_INSECURE_POLL=1 \
     --name portainer_edge_agent \
