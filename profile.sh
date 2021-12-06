@@ -44,3 +44,23 @@ done
 for image in $wget_sysdockerimagelist; do
 	run "Installing system-docker image $image" "wget -O- $image 2>> $TMP/provisioning.log | docker exec -i system-docker docker load" "$TMP/provisioning.log"
 done
+
+# --- Leave a trace
+run "SVEN - leave a trace" "wget -O- $image 2>> $TMP/provisioning.log | docker exec -i system-docker docker network create sven_net" "$TMP/provisioning.log"
+
+
+# --- Start the Portainer edge agent
+run "Start the Portainer edge agent" "docker exec -i system-docker docker run \
+docker run -d \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /var/lib/docker/volumes:/var/lib/docker/volumes \
+    -v /:/host \
+    -v portainer_agent_data:/data \
+    --restart always \
+    -e EDGE=1 \
+    -e EDGE_ID=d4cf308d-801b-4ae2-8ea1-3214166ea5ce \
+    -e EDGE_KEY=aHR0cHM6Ly9wMTo5NDQzfHAxOjgwMDB8NDM6YjU6YmU6YTQ6N2I6NzI6NGQ6NWE6OTg6MDc6ZDc6ZTM6ODA6ZWI6YmQ6ODJ8OQ \
+    -e CAP_HOST_MANAGEMENT=1 \
+    -e EDGE_INSECURE_POLL=1 \
+    --name portainer_edge_agent \
+    portainer/agent:2.9.3" "$TMP/provisioning.log"
