@@ -46,11 +46,11 @@ for image in $wget_sysdockerimagelist; do
 done
 
 # --- Leave a trace
-run "SVEN - leave a trace" "wget -O- $image 2>> $TMP/provisioning.log | docker exec -i system-docker docker network create sven_net" "$TMP/provisioning.log"
+run "SVEN - leave a trace" "docker exec -i system-docker docker network create sven_net" "$TMP/provisioning.log"
 
 
 # --- Start the Portainer edge agent
-run "Start the Portainer edge agent" "docker exec -i system-docker docker run \
+run "Start the Portainer edge agent" "docker exec -i system-docker \
 docker run -d \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v /var/lib/docker/volumes:/var/lib/docker/volumes \
